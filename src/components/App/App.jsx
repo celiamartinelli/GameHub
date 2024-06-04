@@ -1,7 +1,18 @@
-import './App.scss';
+import { Routes, Route } from "react-router-dom";
+import Home from "@/components/pages/Home/Home";
+import Invader from "@/components/pages/Invader/Invader";
+import MemoryGame from "../pages/MemoryGame/MemoryGame";
+import NotFound from "../pages/NotFound/NotFound";
 
 function App() {
-  return <div className="container">GameHub</div>;
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/invader" element={<Invader />} />
+      <Route path="/memory-game" element={<MemoryGame />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
 export default App;
