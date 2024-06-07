@@ -15,7 +15,7 @@ export default function Invader() {
       for (let j = 0; j < gridSize; j++) {
         row.push(
           <div
-            className="w-12 h-12 bg-gray-300 border-2 border-gray-500 cursor-pointer"
+            className="w-8 h-8 bg-gray-300 border-2 border-gray-500 cursor-pointer"
             onClick={clickPixel}
             key={`${i}-${j}`}
           ></div>
@@ -31,8 +31,7 @@ export default function Invader() {
   };
 
   const clickPixel = (event) => {
-    event.target.className =
-      "w-12 h-12 cursor-pointer border-2 " + currentColor;
+    event.target.className = "w-8 h-8 cursor-pointer border-2 " + currentColor;
   };
 
   const handleSubmit = (event) => {
@@ -44,32 +43,36 @@ export default function Invader() {
   return (
     <div>
       <Header />
-      <h1>Invader</h1>
-      <form
-        className="h-36 flex items-center justify-center bg-blue-800"
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="number"
-          placeholder="Taille de la grille"
-          className="p-4 border-0 text-lg w-24 mr-1"
-        />
-        <input
-          type="number"
-          placeholder="Taille des pixels"
-          className="p-4 border-0 text-lg w-24"
-        />
-        <button
-          type="submit"
-          className="p-4 border-0 text-lg text-white bg-purple-600 "
+      <div className=" bg-blue-800">
+        <h1 className="flex justify-center items center p-4 text-white font-bold">
+          Invader
+        </h1>
+        <form
+          className="h-15 flex items-center justify-center pb-4 "
+          onSubmit={handleSubmit}
         >
-          Valider
-        </button>
-      </form>
+          <input
+            type="number"
+            placeholder="Taille de la grille"
+            className="p-4 border-0 text-lg w-24 mr-1"
+          />
+          <input
+            type="number"
+            placeholder="Taille des pixels"
+            className="p-4 border-0 text-lg w-24"
+          />
+          <button
+            type="submit"
+            className="p-4 border-0 text-lg text-white bg-purple-600 "
+          >
+            Valider
+          </button>
+        </form>
+      </div>
 
       <div
         id="invader"
-        className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-900 to-purple-800"
+        className="flex flex-col items-center p-6 min-h-screen bg-gradient-to-r from-blue-900 to-purple-800"
       >
         {createGrid()}
         <div className="flex justify-center items-center w-30 h-20">

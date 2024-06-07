@@ -3,7 +3,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
-      mobileS: "320px",
+      mobileS: "150px",
+      // => @media (min-width: 150px) { ... }
+
+      mobileM: "320px",
       // => @media (min-width: 320px) { ... }
 
       mobileL: "425px",
@@ -25,6 +28,10 @@ export default {
       backgroundImage: (theme) => ({
         "header-background": "url('public/asset/header-background.jpeg')",
       }),
+      backdropBlur: {
+        none: "0",
+        blur: "blur(20px)",
+      },
       // dedans tu écriras tes couleurs, tailles, polices, etc.
     },
   },
