@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import "./MemoryGame.scss";
 import Header from "../../Header/Header";
 
 function MemoryGame() {
-  const [emojis, setEmojis] = useState([
+  const initialEmojis = [
     "🥑",
     "🥑",
     "🌻",
@@ -19,71 +20,89 @@ function MemoryGame() {
     "✌🏻",
     "😎",
     "😎",
-  ]);
+  ];
+
+  const [emojis, setEmojis] = useState([]);
   const [openCards, setOpenCards] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
+  const [flippedCards, setFlippedCards] = useState(
+    Array(initialEmojis.length).fill(false)
+  );
 
   useEffect(() => {
-    setEmojis(emojis.sort(() => (Math.random() > 0.5 ? 1 : -1)));
+    setEmojis([...initialEmojis].sort(() => Math.random() - 0.5));
   }, []);
 
   const handleCardClick = (index) => {
+    if (flippedCards[index] || openCards.length === 2) return;
+
+    const newFlippedCards = [...flippedCards];
+    newFlippedCards[index] = true;
+    setFlippedCards(newFlippedCards);
+    setOpenCards((prev) => [...prev, index]);
+
     if (openCards.length === 1) {
-      setOpenCards((prev) => [...prev, index]);
       setTimeout(() => {
-        checkForMatch();
+        checkForMatch(index);
       }, 500);
-    } else {
-      setOpenCards([index]);
     }
   };
 
-  const checkForMatch = () => {
-    const card1Index = openCards[0];
-    const card2Index = openCards[1];
-
-    if (emojis[card1Index] === emojis[card2Index]) {
-      setMatchedCards((prev) => [...prev, card1Index, card2Index]);
+  const checkForMatch = (secondIndex) => {
+    const firstIndex = openCards[0];
+    if (emojis[firstIndex] === emojis[secondIndex]) {
+      setMatchedCards((prev) => [...prev, firstIndex, secondIndex]);
+    } else {
+      const newFlippedCards = [...flippedCards];
+      newFlippedCards[firstIndex] = false;
+      newFlippedCards[secondIndex] = false;
+      setFlippedCards(newFlippedCards);
     }
-
     setOpenCards([]);
   };
 
+  const resetGame = () => {
+    setEmojis([...initialEmojis].sort(() => Math.random() - 0.5));
+    setFlippedCards(Array(initialEmojis.length).fill(false));
+    setOpenCards([]);
+    setMatchedCards([]);
+  };
+
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <div>
-        {" "}
-        <h1 className="text-3xl text-white uppercase tracking-wider">
-          Memory Game
+      <div className="flex flex-col justify-center items-center bg-green-800 p-5 flex-grow">
+        <h1 className="text-2xl text-white uppercase tracking-wider pb-6">
+          Jeu de Mémoire
         </h1>
-        <button className="px-5 py-4 text-green-600 bg-white border-none text-lg tracking-wider cursor-pointer font-semibold focus:text-white focus:bg-green-600">
-          Reset
+        <button
+          className="px-5 py-4 text-green-600 text-lg tracking-wider cursor-pointer font-semibold bg-white rounded focus:outline-none focus:bg-green-600 focus:text-white"
+          onClick={resetGame}
+        >
+          Réinitialiser
         </button>
       </div>
-      <div className="flex justify-center items-center min-h-screen bg-green-800">
-        <div className="flex justify-center items-center flex-col gap-8 bg-green-600 p-10">
-          <div className="w-96 h-96 flex flex-wrap gap-2 transform-style[preserve-3d] perspective[500px]">
-            {emojis.map((emoji, index) => (
-              <div
-                className={`relative w-24 h-24 flex justify-center items-center text-3xl bg-white transition-all duration-200 transform-gpu ${
-                  openCards.includes(index) ? "rotate-y-0" : ""
-                } ${matchedCards.includes(index) ? "rotate-y-180" : ""}`}
-                key={index}
-                onClick={() => handleCardClick(index)}
-              >
-                <div
-                  className={`absolute inset-0 bg-green-500 transition-all duration-200 backface-hidden ${
-                    openCards.includes(index) || matchedCards.includes(index)
-                      ? "rotate-y-180"
-                      : ""
-                  }`}
-                ></div>
-                {emoji}
+      <div className="flex flex-col items-center bg-green-600 p-7 flex-grow">
+        {matchedCards.length === emojis.length && (
+          <div className="text-white text-xl">Vous avez gagné!</div>
+        )}
+        <div className="grid grid-cols-4 grid-rows-4 gap-2 mt-5">
+          {emojis.map((emoji, index) => (
+            <div
+              className={`card w-14 h-14 rounded-lg ${
+                flippedCards[index] ? "flipped" : ""
+              }`}
+              key={index}
+              onClick={() => handleCardClick(index)}
+            >
+              <div className="card-inner">
+                <div className="card-front flex justify-center items-center text-3xl bg-white">
+                  {emoji}
+                </div>
+                <div className="card-back bg-green-500"></div>
               </div>
-            ))}
-          </div>
-          {matchedCards.length === emojis.length && <div>You Win!</div>}
+            </div>
+          ))}
         </div>
       </div>
     </div>
