@@ -1,130 +1,132 @@
-import React, { useState, useEffect, useRef } from "react";
-import Header from "../../Header/Header";
+import React, { useState, useEffect } from "react";
 import diceSprite from "../../../../public/asset/dice-sprite.png";
+import "./DiceRoller.scss";
+import Header from "../../Header/Header";
 
 function DiceRoller() {
-  const [nbDices, setNbDices] = useState(null);
+  const [inGame, setInGame] = useState(false);
+  const [nbDices, setNbDices] = useState(1);
+  const [playerScore, setPlayerScore] = useState(0);
+  const [dealerScore, setDealerScore] = useState(0);
   const [victory, setVictory] = useState(0);
   const [defeat, setDefeat] = useState(0);
   const [ingame, setIngame] = useState(false);
-  const [playerScore, setPlayerScore] = useState(0);
-  const [counter, setCounter] = useState(3);
-  const counterElement = useRef(null);
-  const [diceValue, setDiceValue] = useState(1); // Valeur du dé
-  const [rolling, setRolling] = useState(false);
 
-  useEffect(() => {
-    document.addEventListener("keyup", handleKeyUp);
-    changeNumber();
-
-    return () => {
-      document.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (counter === 0) {
-      deleteCounter();
-    }
-  }, [counter]);
-
-  const handleKeyUp = (event) => {
-    if (event.code === "Space") {
-      start();
-    }
+  const startGame = () => {
+    setInGame(true);
   };
 
-  const start = () => {
-    // Logic to start the game
+  const changeNumber = (e) => {
+    setNbDices(e.target.value);
   };
 
-  const changeNumber = () => {
-    // Logic to change the number of dices
-  };
-
-  const play = (event) => {
-    event.preventDefault();
+  const play = (e) => {
+    e.preventDefault();
 
     if (!ingame) {
       setIngame(true);
-      reset();
-      setPlayerScore(createAllDices("player"));
-      setTimeout(dealerPlay, 3000);
-      createCounter();
+      const playerTotal = rollDices();
+      setPlayerScore(playerTotal);
+      setTimeout(() => dealerPlay(playerTotal), 3000);
     }
   };
 
-  const reset = () => {
-    // Logic to reset the game
+  const rollDices = () => {
+    let score = 0;
+    for (let i = 0; i < nbDices; i++) {
+      score += Math.floor(Math.random() * 6) + 1;
+    }
+    return score;
   };
 
-  const getRandom = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  const dealerPlay = (playerTotal) => {
+    const dealerTotal = rollDices();
+    setDealerScore(dealerTotal);
+    if (dealerTotal > playerTotal) {
+      setDefeat(defeat + 1);
+    } else if (dealerTotal < playerTotal) {
+      setVictory(victory + 1);
+    }
+    setIngame(false);
   };
 
-  const createAllDices = (player) => {
-    // Logic to create all dices
-  };
-
-  const createDice = (player) => {
-    // Logic to create a dice
-  };
-
-  const dealerPlay = () => {
-    // Logic for the dealer to play
-  };
-
-  const displayResult = (board, counter) => {
-    // Logic to display the result
-  };
-
-  const createCounter = () => {
-    setCounter(3);
-    counterElement.current = document.createElement("div");
-    counterElement.current.textContent = counter;
-    counterElement.current.className = "counter";
-    document.getElementById("app").appendChild(counterElement.current);
-  };
-
-  const countdown = () => {
-    setCounter(counter - 1);
-  };
-
-  const deleteCounter = () => {
-    counterElement.current.remove();
-  };
-
-  const rollDice = () => {
-    setRolling(true);
-    setTimeout(() => {
-      const newValue = Math.floor(Math.random() * 6) + 1; // Générer une nouvelle valeur pour le dé (de 1 à 6)
-      setDiceValue(newValue);
-      setRolling(false);
-    }, 2000); // Temps de l'animation du lancer du dé (2000 ms)
+  const Dice = ({ nbDices }) => {
+    const dices = [];
+    for (let i = 0; i < nbDices; i++) {
+      const diceValue = Math.floor(Math.random() * 6) + 1;
+      const imageOffset = (diceValue - 1) * 100;
+      dices.push(
+        <div
+          key={i}
+          className="dice"
+          style={{
+            backgroundImage: `url(${diceSprite})`,
+            backgroundPosition: `-${imageOffset}px 0`,
+            width: "100px",
+            height: "100px",
+            margin: "1em",
+          }}
+        ></div>
+      );
+    }
+    return <>{dices}</>;
   };
 
   return (
     <div>
       <Header />
-      <div className="game-container bg-orange-400">
-        <h1 className="flex justify-center items-center p-4 text-white font-bold">
-          Dice Roller
-        </h1>
-        <div className="dice-container flex justify-center items-center">
-          <img
-            src={diceSprite}
-            alt="Dé"
-            className={`dice ${rolling && "rolling"}`}
-            style={{ backgroundPosition: `-${(diceValue - 1) * 100}px 0` }}
-          />
-        </div>
-        <button
-          onClick={rollDice}
-          className="roll-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Lancer les dés
-        </button>
-        {/* Reste du code... */}
+      <div className="bg-orange-500 min-h-screen flex flex-col items-center">
+        <h1 className="text-4xl text-white">Dice Roller</h1>
+
+        {inGame ? (
+          <div id="app" className="flex flex-col w-full items-center">
+            <div>
+              <form id="game-form" onSubmit={play} className="mt-4">
+                <input
+                  id="dice-number-input"
+                  type="number"
+                  value={nbDices}
+                  onChange={changeNumber}
+                  className="px-2 py-1 border bg-white"
+                  min="1"
+                />
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded ml-2"
+                >
+                  Roll Dice
+                </button>
+              </form>
+            </div>
+            <div className="flex flex-row">
+              <div id="player" className="board bg-orange-500 w1/2">
+                <Dice nbDices={nbDices} />
+                <div className="result">
+                  <p>Player Score: {playerScore}</p>
+                  <p>Wins: {victory}</p>
+                </div>
+              </div>
+              <div id="dealer" className="board bg-orange-600">
+                <Dice nbDices={nbDices} />
+                <div className="result">
+                  <p>Dealer Score: {dealerScore}</p>
+                  <p>Losses: {defeat}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div id="welcome" className="text-center">
+            <h1 className="text-4xl mb-4">Welcome to Dice Game</h1>
+            <button
+              id="play"
+              onClick={startGame}
+              className="px-4 py-2 bg-blue-500 text-white rounded"
+            >
+              Start Game
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -6,12 +6,12 @@ import { TbGrillFork } from "react-icons/tb";
 
 export default function Header() {
   return (
-    <div>
-      <h1 className="flex justify-center pt-6 text-5xl font-bold bg-header-background p-10 bg-cover bg-center opacity-75 backdrop-blur-lg">
+    <div className="flex flex-col justify-center items-center">
+      <h1 className="text-6xl p-7">
         <NavLink to="/">GameHub</NavLink>
       </h1>
-      <nav className="tablet:fixed tablet:top-14 tablet:left-0 tablet:right-0 mobileS:fixed mobileS:bottom-0 mobileS:left-0 mobileS:right-0  mobileS:bg-white opacity-50 mobileM:bg-white  mobileL:bg-white tablet:bg-transparent ">
-        <ul className="flex justify-center">
+      <nav className="mobileS:fixed mobileS:bottom-0 mobileS:left-0 mobileS:right-0 bottom-0 left-0 right-0 bg-white opacity-50 tablet:relative  tablet:bg-transparent ">
+        <ul className="flex justify-center items-center ">
           <li className="p-4">
             <NavLink to="/dice-roller">
               <span className="tablet:hidden">
