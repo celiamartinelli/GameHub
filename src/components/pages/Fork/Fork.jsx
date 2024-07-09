@@ -61,14 +61,14 @@ export default function NumberGuessingGame() {
     <div>
       <Header />
       <div className="flex flex-col items-center p-6 min-h-screen bg-gradient-to-r from-blue-500 to-blue-900">
-        <h1 className="text-white font-bold">Jeu de la Fourchette</h1>
+        <h1 className="text-white text-4xl">Jeu de la Fourchette</h1>
         <div className="mt-4">
           <input
             type="number"
             value={enteredNumber}
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
-            className="p-2 rounded-md w-24 bg-white border-solid border mr-2"
+            className="p-2 rounded-md bg-white border-solid border mr-2"
             placeholder="Entrez un nombre"
           />
           <button

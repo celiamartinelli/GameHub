@@ -52,34 +52,32 @@ export default function Invader() {
     },
     {
       color: "bg-yellow-500 border-yellow-700",
-      darkerBorder: "border-yellow-800",
+      darkerBorder: "border-yellow-800 border-solid-2",
     },
   ];
 
   return (
     <div>
       <Header />
-      <div className="bg-blue-800">
-        <h1 className="flex justify-center items center p-4 text-white font-bold">
-          Invader
-        </h1>
+      <div className="bg-blue-800 flex flex-col items-center p-6">
+        <h1 className="text-4xl text-white mb-2 ">Invader</h1>
         <form
-          className="h-15 flex items-center justify-center pb-4"
+          className="h-15 flex items-center justify-center pb-1 flex-col"
           onSubmit={handleSubmit}
         >
           <input
             type="number"
             placeholder="Taille de la grille"
-            className="p-2 rounded-l-md w-24 bg-white border-solid border"
+            className="p-2 rounded-md bg-white sm:rounded-l-md"
           />
           <input
             type="number"
             placeholder="Taille des pixels"
-            className="p-2 w-24 bg-white"
+            className="p-2 rounded-md bg-white mt-2 sm:rounded-none"
           />
           <button
             type="submit"
-            className="p-2 rounded-r-md text-white bg-purple-600"
+            className="p-2 rounded-md text-white bg-purple-600 mt-2 sm:rounded-r-md"
           >
             Valider
           </button>
@@ -97,13 +95,13 @@ export default function Invader() {
               key={button.color}
               onClick={() => {
                 setCurrentColor(button.color);
-                console.log(button.color);
-                setSelectedButton(button.darkerBorder);
-                console.log(button.darkerBorder);
+                setSelectedButton(button.color);
               }}
               className={`w-10 h-10 rounded-full ${button.color} ${
-                selectedButton === button.color ? button.darkerBorder : ""
-              } border-solid-3 box-border mx-2`}
+                selectedButton === button.color
+                  ? `w-12 h-12 ${button.darkerBorder}`
+                  : ""
+              } border-2 border-solid mx-2 transition-all duration-300`}
             />
           ))}
         </div>

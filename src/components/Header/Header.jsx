@@ -6,7 +6,14 @@ import { TbGrillFork } from "react-icons/tb";
 
 export default function Header() {
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div
+      className="flex flex-col justify-center items-center shadow-lg"
+      style={{
+        backgroundImage: "url('../../public/asset/background-2.png')",
+        backgroundSize: "cover",
+      }}
+    >
+      {/* <img src="../../public/asset/Nouveau projet.png" alt="logo" /> */}
       <h1 className="text-6xl p-7">
         <NavLink to="/">GameHub</NavLink>
       </h1>

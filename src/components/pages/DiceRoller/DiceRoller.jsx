@@ -75,8 +75,8 @@ function DiceRoller() {
   return (
     <div>
       <Header />
-      <div className="bg-orange-500 min-h-screen flex flex-col items-center">
-        <h1 className="text-4xl text-white">Dice Roller</h1>
+      <div className="bg-orange-500 min-h-screen flex flex-col items-center p-6">
+        <h1 className="text-4xl text-white mb-2">Dice Roller</h1>
 
         {inGame ? (
           <div id="app" className="flex flex-col w-full items-center">

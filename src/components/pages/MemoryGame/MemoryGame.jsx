@@ -71,12 +71,15 @@ function MemoryGame() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="flex flex-col justify-center items-center bg-green-800 p-2 flex-grow">
-        <h1 className="text-xl text-white uppercase tracking-wider pb-3">
+      <div className="flex flex-col items-center p-6 bg-green-800 ">
+        <h1
+          className="text-4xl text-white mb-2
+"
+        >
           Jeu de Mémoire
         </h1>
         <button
-          className="px-3 py-2 text-green-600 text-lg tracking-wider cursor-pointer font-semibold bg-white rounded focus:outline-none focus:bg-green-600 focus:text-white"
+          className="px-3 py-2 text-green-600 tracking-wider cursor-pointer font-semibold bg-white rounded focus:outline-none focus:bg-green-600 focus:text-white"
           onClick={resetGame}
         >
           Réinitialiser
