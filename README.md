@@ -2,6 +2,8 @@
 
 GameHub est une application web regroupant quatre mini-jeux divertissants et addictifs. Cette application a pour but de fournir une plateforme unique où les utilisateurs peuvent accéder à différents jeux et s'amuser.
 
+![GameHub Home](./public/asset/capture/home.png "Titre optionnel")
+
 ## Table des matières
 
 - [Fonctionnalités](#fonctionnalités)
@@ -21,9 +23,13 @@ GameHub est une application web regroupant quatre mini-jeux divertissants et add
 ## Mini-jeux
 
 1. **Invader** : Un jeu de peinture de pixels où les utilisateurs peuvent créer et personnaliser des grilles de pixels.
+   ![GameHub Invader](./public/asset/capture/invader.png "Titre optionnel")
 2. **Memory Game** : Un jeu de mémoire où les utilisateurs doivent trouver toutes les paires d'images correspondantes.
+   ![GameHub Memory Game](./public/asset/capture/memory_game.png "Titre optionnel")
 3. **Jeu de la Fourchette** : Un jeu où les utilisateurs doivent deviner un nombre exact en utilisant des indices de fourchette.
+   ![GameHub Memory Fork](./public/asset/capture/fork.png "Titre optionnel")
 4. **Dice Roller** : Un jeu où les utilisateurs peuvent lancer des dés virtuels et obtenir des résultats aléatoires.
+   ![GameHub Dice Roller](./public/asset/capture/dice_roller.png "Titre optionnel")
 
 ## Installation
 

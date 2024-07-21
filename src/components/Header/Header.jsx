@@ -13,18 +13,17 @@ export default function Header() {
         backgroundSize: "cover",
       }}
     >
-      {/* <img src="../../public/asset/Nouveau projet.png" alt="logo" /> */}
       <h1 className="text-6xl p-7">
         <NavLink to="/">GameHub</NavLink>
       </h1>
       <nav className="mobileS:fixed mobileS:bottom-0 mobileS:left-0 mobileS:right-0 bottom-0 left-0 right-0 bg-white opacity-50 tablet:relative  tablet:bg-transparent ">
-        <ul className="flex justify-center items-center ">
-          <li className="p-4">
+        <ul className="flex justify-center items-center text-lg ">
+          <li className="p-4 ">
             <NavLink to="/dice-roller">
               <span className="tablet:hidden">
                 <FaDice />
               </span>
-              <span className="tablet:block mobileS:hidden mobileL:hidden">
+              <span className=" tablet:block mobileS:hidden mobileL:hidden">
                 Dice Roller
               </span>
             </NavLink>
